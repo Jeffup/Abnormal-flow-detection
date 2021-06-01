@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block style %}
+{{static_file('css', 'bootstrap-table/bootstrap-table.min.css')}}
+{% endblock style %}
+
+{% block content %}
+<div class="row clearfix">
+	<div class="col-md-12 column">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="card">
+					<div class="card-body">
+						<div class="jumbotron">
+							<div class="container">
+								<div class="row clearfix">
+									<div class="col-md-7 column">
+										<h1>{{ ip }}</h1>
+										<p>MAC地址: <span style="font-size:16px" id="mac"></span></p>
+										<p>开始攻击时间: <span style="font-size:16px" id="first-time"></span></p>
+										<p>最近攻击时间: <span style="font-size:16px" id="last-time"></span></p>
+										<p>攻击总数: <span style="font-size:16px" id="attack-count"></span></p>
+									</div>
+									<div id="statistic_chart" class="col-md-5 column"  style="width:350px; height:300px">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row clearfix">
+			 <div class="col-md-12 column">
+				 <div class="card">
+					 <div class="card-body">
+						 <table id="detail-table" query_ip={{ ip }} ></table>
+					 </div>
+				 </div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+{{static_file('js', 'bootstrap-table/bootstrap-table.min.js')}}
+{{static_file('js', 'bootstrap-table/locale/bootstrap-table-zh-CN.js')}}
+{{static_file('js', 'echart/echarts.common.js')}}
+{{static_file('js', 'js/table-ipdetail.js')}}
+{% endblock script %}

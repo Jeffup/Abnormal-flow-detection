@@ -1,0 +1,17 @@
+<!--
+Tips:此宏文件用于加载静态资源,函数为static,默认local=True,即调用本地文件,用法如下:
+1. static_file('css','css/bootstrap.css')
+2. static_file('css','链接',local=False)
+-->
+{% macro static_file(type, filename_or_url, local=True) %}
+    {% if local %}
+        {% set filename_or_url=url_for('static', filename=filename_or_url) %}
+    {% endif %}
+    {% if type=='css' %}
+        <link type="text/css" href="{{ filename_or_url }}" rel="stylesheet">
+    {% elif type=='js' %}
+        <script type="text/javascript" src="{{ filename_or_url }}"></script>
+    {% elif type=='icon' %}
+        <link rel="icon" href="{{ filename_or_url }}">
+    {% endif %}
+{% endmacro %}

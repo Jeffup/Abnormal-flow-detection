@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block style %}
+{{static_file('css', 'bootstrap-table/bootstrap-table.css')}}
+{{static_file('css', 'select2/css/select2.css')}}
+{{static_file('css', 'datetimepicker/css/datetimepicker.css')}}
+{% endblock style %}
+
+{% block content %}
+ <div class="container-fluid">
+	 <div class="row">
+		 <div class="col-sm-6 col-lg-3">
+         	<div class="card bg-primary">
+              	<div class="card-body clearfix">
+                	<div class="pull-right">
+                  		<p class="h6 text-white m-t-0">总流量</p>
+                  		<p class="h3 text-white m-b-0 fa-1-5x" id="flowcount">0 b</p>
+                	</div>
+                	<div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-currency-cny fa-1-5x"></i></span> </div>
+              	</div>
+            </div>
+          </div>
+
+		 <div class="col-sm-6 col-lg-3">
+         	<div class="card bg-danger">
+            	<div class="card-body clearfix">
+            		<div class="pull-right">
+                  		<p class="h6 text-white m-t-0">攻击总数</p>
+                  		<p class="h3 text-white m-b-0 fa-1-5x" id="attackcount">0</p>
+					</div>
+					<div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-account fa-1-5x"></i></span> </div>
+				</div>
+            </div>
+		 </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="card bg-success">
+              <div class="card-body clearfix">
+                <div class="pull-right">
+                  <p class="h6 text-white m-t-0">敏感数据</p>
+                  <p class="h3 text-white m-b-0 fa-1-5x" id="sendatacount">0</p>
+                </div>
+                <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-arrow-down-bold fa-1-5x"></i></span> </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="card bg-purple">
+              <div class="card-body clearfix">
+                <div class="pull-right">
+                  <p class="h6 text-white m-t-0">IP总数</p>
+                  <p class="h3 text-white m-b-0 fa-1-5x" id="ipcount">0</p>
+                </div>
+                <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-comment-outline fa-1-5x"></i></span> </div>
+              </div>
+            </div>
+		  </div>
+	 </div>
+
+	 <div class="row">
+		 <div class="col-lg-6">
+			 <div class="card">
+              <div class="card-header">
+                <h4>协议统计图</h4>
+              </div>
+              <div class="card-body">
+                <div id="protocalchart" style="height: 400px; width: 100%"></div>
+              </div>
+              </div>
+		 </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h4>攻击IP统计</h4>
+              </div>
+              <div class="card-body">
+                <div id="attackipchart" style="height: 400px; width: 100%"></div>
+            </div>
+          	</div>
+		  </div>
+		 </div>
+
+
+
+
+<div class="row clearfix">
+	<div class="col-md-12 column">
+		<div class="card">
+			<div class="card-header">
+				<h4>事件汇总</h4>
+			</div>
+			<div class="card-body">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="col-md-3 column">
+							<label for="attacktype">攻击类型: </label></br>
+							<select class="select2-container--default" id="attacktype" multiple name="attacktype" style="width: 90%" placeholder="选择攻击类型">
+								{% for opt in options %}
+									<option value="{{ opt }}">{{ opt }}</option>
+								{% endfor %}
+							</select>
+						</div>
+
+						<div class="col-md-5 column form-inline">
+							<label>时间查询: </label></br>
+							<input type="text" id="startdate" class="form-control datetimepicker" placeholder="开始时间" style="width: 47%">
+							--
+							<input type="text" id="enddate" class="form-control datetimepicker" placeholder="结束时间" style="width: 47%" >
+						</div>
+
+						<div class="col-md-4 column">
+							<label>攻击模糊查询: </label></br>
+							<input type="text" id="detail" class="form-control" placeholder="输入攻击详情">
+						</div>
+
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div id="toolbar" class="btn-group">
+						<button class="btn btn-default" id="queryButton"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询</button>
+						<button class="btn btn-default" id="cleanButton"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>清除查询</button>
+					</div>
+					 <div class="col-md-12 column">
+						<table id="events-table">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+<script type="text/javascript">
+
+</script>
+
+{% block script %}
+{{static_file('js', 'bootstrap-table/bootstrap-table.js')}}
+{{static_file('js', 'bootstrap-table/locale/bootstrap-table-zh-CN.js')}}
+{{static_file('js', 'select2/js/select2.js')}}
+{{static_file('js', 'datetimepicker/js/datetimepicker.js')}}
+{{static_file('js', 'datetimepicker/js/datetimepicker-model.js')}}
+
+<script type="text/javascript">
+    $('select').select2({});
+    //多选
+    $("#sel_attacktype").select2({
+        tags: true,
+        maximumSelectionLength: 3  //最多能够选择的个数
+    });
+	$("#sel_protocoltype").select2({
+        tags: true,
+        maximumSelectionLength: 3  //最多能够选择的个数
+    });
+	$("#startdate").datetimepicker({
+		format: 'Y-m-d H:m:s',
+	});
+	$("#enddate").datetimepicker({
+		format: 'Y-m-d H:m:s',
+	});
+	// datetimepickerModel.initDate("startdate","enddate");
+</script>
+{{static_file('js', 'echart/echarts.common.js')}}
+{{static_file('js', 'js/table-events.js')}}
+{% endblock script %}

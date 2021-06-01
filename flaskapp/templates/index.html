@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block style %}
+{{static_file('css', 'bootstrap-table/bootstrap-table.min.css')}}
+{% endblock style %}
+
+{% block content %}
+<div class="container-fluid">
+	 <div class="row">
+		<div class="col-lg-12">
+			 <div class="card">
+              <div class="card-header">
+                <h4>异常流量时间图</h4>
+              </div>
+              <div class="card-body">
+                <div id="flowchart"  style="height: 400px; width: 100%"></div>
+              </div>
+            </div>
+          </div>
+	 </div>
+
+	 <div class="row">
+		 <div class="col-lg-6">
+			 <div class="row">
+                 <div class="col-sm-6 col-lg-6">
+                    <div class="card bg-primary">
+                        <div class="card-body clearfix">
+                            <div class="pull-right">
+                                <p class="h6 text-white m-t-0">CPU使用率</p>
+                                <p class="h3 text-white m-b-0 fa-1-5x" id="cpuinfo">- %</p>
+                            </div>
+                            <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-currency-cny fa-1-5x"></i></span> </div>
+                        </div>
+                    </div>
+                  </div>
+
+                 <div class="col-sm-6 col-lg-6">
+                    <div class="card bg-danger">
+                        <div class="card-body clearfix">
+                            <div class="pull-right">
+                                <p class="h6 text-white m-t-0">磁盘使用率</p>
+                                <p class="h3 text-white m-b-0 fa-1-5x" id="diskinfo">- %</p>
+                            </div>
+                            <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-account fa-1-5x"></i></span> </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+             <div class="row">
+              <div class="col-sm-6 col-lg-6">
+                <div class="card bg-success">
+                  <div class="card-body clearfix">
+                    <div class="pull-right">
+                      <p class="h6 text-white m-t-0">内存使用率</p>
+                      <p class="h3 text-white m-b-0 fa-1-5x" id="meminfo">- %</p>
+                    </div>
+                    <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-arrow-down-bold fa-1-5x"></i></span> </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-lg-6">
+                <div class="card bg-purple">
+                  <div class="card-body clearfix">
+                    <div class="pull-right">
+                      <p class="h6 text-white m-t-0">AUTOR</p>
+                      <p class="h3 text-white m-b-0 fa-1-5x" id="name">黄健富</p>
+                    </div>
+                    <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-comment-outline fa-1-5x"></i></span> </div>
+                  </div>
+                </div>
+              </div>
+         </div>
+             </div>
+
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h4>攻击实时消息</h4>
+              </div>
+              <div class="card-body">
+                    <table id="alarm-table"></table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+{{static_file('js', 'bootstrap-table/bootstrap-table.min.js')}}
+{{static_file('js', 'bootstrap-table/locale/bootstrap-table-zh-CN.js')}}
+{{static_file('js', 'js/socket.io.js')}}
+{{static_file('js', 'echart/echarts.common.js')}}
+{{static_file('js', 'js/chart-index.js')}}
+{% endblock script %}
